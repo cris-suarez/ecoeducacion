@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huella de Carbono del Grupo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+  <style>
+    body {
+      background-color: #0d1f17;
+      color: #e6f2ec;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #9fffa3;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      background-color: #12261c;
+    }
+    th {
+      background-color: #198754;
+      color: white;
+    }
+    .card {
+      background-color: #143226;
+      border: 1px solid #198754;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0f3d2e;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌿 Huella de Carbono del Grupo</h1>
+  <p class="text-center mb-4">Resultados individuales y análisis general de la huella de carbono en toneladas de CO₂.</p>
+
+  <div class="table-responsive mb-5">
+    <table id="tablaHuella" class="table table-striped table-bordered table-hover align-middle text-center">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Huella Total (ton)</th>
+          <th>Vivienda (ton)</th>
+          <th>Viajar (ton)</th>
+          <th>Consumo (ton)</th>
+        </tr>
+      </thead>
+      <tbody id="datosTabla"></tbody>
+    </table>
+  </div>
+
+  <div class="row text-center mb-4">
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Promedio general</h5>
+        <p id="promedioTotal" class="fs-4"></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Mayor huella</h5>
+        <p id="mayorHuella" class="fs-5"></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Menor huella</h5>
+        <p id="menorHuella" class="fs-5"></p>
+      </div>
+    </div>
+  </div>
+
+  <h2>📊 Comparativa de Huella Total</h2>
+  <canvas id="graficoTotal" height="120"></canvas>
+
+  <h2 class="mt-5">🏠 Distribución Promedio por Categoría</h2>
+  <canvas id="graficoCategorias" height="100"></canvas>
+
+  <script>
+    const datos = [
+      {nombre:"Aguirre Luis Boris Rajabil", total:6.1, vivienda:1, viajar:1.9, consumo:3.2},
+      {nombre:"Anco Porras Jhean Piaget Nando", total:14, vivienda:0.7, viajar:9.1, consumo:4.2},
+      {nombre:"Apolinario Raymundo Elías", total:6.1, vivienda:0.8, viajar:1.7, consumo:3.6},
+      {nombre:"Bailon Perez Iván", total:2.6, vivienda:0.6, viajar:0.3, consumo:1.7},
+      {nombre:"Baldeon Córdova Ángel Arturo", total:3.5, vivienda:0, viajar:0.4, consumo:3.1},
+      {nombre:"Barra Solano Lizeth", total:8.4, vivienda:0.8, viajar:5.4, consumo:2.2},
+      {nombre:"Cahuana Ayala Esther Nicole", total:4.9, vivienda:1.1, viajar:0.2, consumo:3.6},
+      {nombre:"Canto Suasnabar Alfredo Tavi", total:3.9, vivienda:0.7, viajar:0.3, consumo:2.9},
+      {nombre:"Capcha Poma Ángel Lenin", total:4.2, vivienda:1, viajar:0.8, consumo:2.4},
+      {nombre:"Carhuapoma Taype Johan Sergio", total:5.4, vivienda:0.9, viajar:1.6, consumo:2.9},
+      {nombre:"Castilla Correa Ingrid Sara", total:2.9, vivienda:0.6, viajar:0.6, consumo:1.7},
+      {nombre:"Castillo Damian Cesia", total:2.9, vivienda:0.6, viajar:0.1, consumo:2.2},
+      {nombre:"Cueto Ramos Geser", total:4.2, vivienda:1.2, viajar:0.3, consumo:2.7},
+      {nombre:"Huarmartica Rahul Yenifer Paola", total:4, vivienda:0.9, viajar:0.4, consumo:2.7},
+      {nombre:"Huiza Melchor Jose Luis", total:4.9, vivienda:0.2, viajar:1.3, consumo:3.4},
+      {nombre:"Maycol George De La Cruz Montañez", total:3.3, vivienda:0.5, viajar:0.3, consumo:2.5},
+      {nombre:"Perez Macuri Paola", total:5.3, vivienda:0.7, viajar:1.3, consumo:3.3},
+      {nombre:"Suarez Torres Cris Duran", total:5.3, vivienda:1.1, viajar:0.5, consumo:3.7},
+      {nombre:"Adriano Pariona Jhol", total:3.6, vivienda:0.7, viajar:0.4, consumo:2.5},
+      {nombre:"Alvino Cóndor Andrea Alexandra", total:6.9, vivienda:1.6, viajar:1.6, consumo:3.7},
+      {nombre:"Castañeda Estrella Giomira Edith", total:6.6, vivienda:0.9, viajar:2.9, consumo:2.8}
+    ];
+
+    const cuerpoTabla = document.getElementById("datosTabla");
+    datos.forEach(d => {
+      const fila = `<tr>
+        <td>${d.nombre}</td>
+        <td>${d.total}</td>
+        <td>${d.vivienda}</td>
+        <td>${d.viajar}</td>
+        <td>${d.consumo}</td>
+      </tr>`;
+      cuerpoTabla.innerHTML += fila;
+    });
+
+    const promedio = (arr, campo) => arr.reduce((a,b)=>a+b[campo],0)/arr.length;
+    const promedioTotal = promedio(datos, "total").toFixed(2);
+    document.getElementById("promedioTotal").textContent = promedioTotal + " ton CO₂";
+
+    const mayor = datos.reduce((max,d)=>d.total>max.total?d:max);
+    const menor = datos.reduce((min,d)=>d.total<min.total?d:min);
+    document.getElementById("mayorHuella").textContent = `${mayor.nombre} (${mayor.total} ton)`;
+    document.getElementById("menorHuella").textContent = `${menor.nombre} (${menor.total} ton)`;
+
+    // --- Gráfico comparativo ---
+    const ctx1 = document.getElementById("graficoTotal");
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: datos.map(d=>d.nombre),
+        datasets: [{
+          label: "Huella Total (ton CO₂)",
+          data: datos.map(d=>d.total),
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins:{legend:{display:false}},
+        scales:{x:{ticks:{color:"#9fffa3"}},y:{ticks:{color:"#9fffa3"}}}
+      }
+    });
+
+    // --- Gráfico categorías ---
+    const ctx2 = document.getElementById("graficoCategorias");
+    new Chart(ctx2, {
+      type: 'pie',
+      data: {
+        labels: ["Vivienda", "Viajar", "Consumo"],
+        datasets: [{
+          data: [
+            promedio(datos,"vivienda").toFixed(2),
+            promedio(datos,"viajar").toFixed(2),
+            promedio(datos,"consumo").toFixed(2)
+          ]
+        }]
+      },
+      options: {
+        plugins:{
+          legend:{labels:{color:"#9fffa3"}}
+        }
+      }
+    });
+  </script>
+</body>
+</html>
