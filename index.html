@@ -3,40 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Huella de Carbono del Grupo</title>
+  <title>Huella de Carbono - Estudiantes de Octavo Semestre A</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
   <style>
+    /* === ESTILOS GENERALES === */
     body {
-      background-color: #0d1f17;
-      color: #e6f2ec;
+      background-color: #0e1813;
+      color: #e8f3eb;
       font-family: 'Segoe UI', sans-serif;
       padding: 20px;
     }
     h1, h2 {
-      color: #9fffa3;
+      color: #7fffd4;
       text-align: center;
       margin-bottom: 20px;
+      font-weight: 700;
+      text-shadow: 0 0 10px #1c4631;
     }
+    p, td, th {
+      color: #d8ede2;
+    }
+
+    /* === TABLA === */
     table {
-      background-color: #12261c;
+      background-color: #14261d;
+      border-radius: 10px;
+      overflow: hidden;
     }
     th {
-      background-color: #198754;
-      color: white;
+      background-color: #1a5238;
+      color: #eaf4ed;
     }
+    tr:hover {
+      background-color: #1f362b !important;
+    }
+
+    /* === TARJETAS DE INFORMACIÓN === */
     .card {
-      background-color: #143226;
-      border: 1px solid #198754;
+      background-color: #163226;
+      border: 1px solid #1f6d4b;
       border-radius: 12px;
-      box-shadow: 0 0 10px #0f3d2e;
+      box-shadow: 0 0 15px #0f3d2e60;
+      color: #bce6d2;
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    /* === CONCLUSIONES === */
+    .conclusiones {
+      margin-top: 60px;
+    }
+    .conclusiones h3 {
+      color: #7fffd4;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+    .conclusion-card {
+      background-color: #143325;
+      border-left: 5px solid #3ccf91;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px #1b4c36;
+    }
+    .conclusion-card h5 {
+      color: #9fffc5;
+      margin-bottom: 10px;
+    }
+    .conclusion-card p {
+      margin: 0;
+      color: #d7f0e0;
+      text-align: justify;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.3rem; }
+      .card { margin-bottom: 15px; }
     }
   </style>
 </head>
 <body>
-  <h1>🌿 Huella de Carbono del Grupo</h1>
-  <p class="text-center mb-4">Resultados individuales y análisis general de la huella de carbono en toneladas de CO₂.</p>
+  <h1>🌿 Huella de Carbono - Estudiantes de Octavo Semestre A</h1>
+  <p class="text-center mb-4">Análisis del impacto ambiental en toneladas de CO₂ derivado de vivienda, transporte y consumo personal.</p>
 
+  <!-- === TABLA DE DATOS === -->
   <div class="table-responsive mb-5">
     <table id="tablaHuella" class="table table-striped table-bordered table-hover align-middle text-center">
       <thead>
@@ -52,33 +108,66 @@
     </table>
   </div>
 
+  <!-- === TARJETAS DE DATOS === -->
   <div class="row text-center mb-4">
     <div class="col-md-4">
       <div class="card p-3">
         <h5>Promedio general</h5>
-        <p id="promedioTotal" class="fs-4"></p>
+        <p id="promedioTotal" class="fs-4 fw-bold"></p>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card p-3">
         <h5>Mayor huella</h5>
-        <p id="mayorHuella" class="fs-5"></p>
+        <p id="mayorHuella" class="fs-5 fw-semibold"></p>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card p-3">
         <h5>Menor huella</h5>
-        <p id="menorHuella" class="fs-5"></p>
+        <p id="menorHuella" class="fs-5 fw-semibold"></p>
       </div>
     </div>
   </div>
 
+  <!-- === GRÁFICOS === -->
   <h2>📊 Comparativa de Huella Total</h2>
   <canvas id="graficoTotal" height="120"></canvas>
 
   <h2 class="mt-5">🏠 Distribución Promedio por Categoría</h2>
   <canvas id="graficoCategorias" height="100"></canvas>
 
+  <!-- === CONCLUSIONES GENERALES === -->
+  <div class="conclusiones">
+    <h3>🟢 Conclusiones Generales</h3>
+
+    <div class="conclusion-card">
+      <h5>🌍 1. Promedio general estable</h5>
+      <p>El promedio general de la huella de carbono del grupo se mantiene dentro de un rango moderado, indicando un comportamiento ambientalmente equilibrado entre los estudiantes.</p>
+    </div>
+
+    <div class="conclusion-card">
+      <h5>🚗 2. El transporte, el mayor contribuyente</h5>
+      <p>La categoría “Viajar” representa el componente más variable y en algunos casos el más alto, lo que sugiere la necesidad de promover el uso de medios sostenibles como bicicletas, caminatas o transporte compartido.</p>
+    </div>
+
+    <div class="conclusion-card">
+      <h5>🏠 3. Vivienda con impacto controlado</h5>
+      <p>El consumo energético doméstico es relativamente bajo en la mayoría de los casos, mostrando buenas prácticas en eficiencia energética y consumo responsable.</p>
+    </div>
+
+    <div class="conclusion-card">
+      <h5>🛍️ 4. Consumo personal equilibrado</h5>
+      <p>El componente de consumo (alimentación y bienes) refleja hábitos moderados, aunque aún se puede reducir el impacto optando por productos locales y sostenibles.</p>
+    </div>
+
+    <div class="conclusion-card">
+      <h5>🌱 5. Compromiso ambiental a futuro</h5>
+      <p>Se recomienda fortalecer la educación ambiental y fomentar actividades que reduzcan la huella de carbono grupal, promoviendo un estilo de vida más sostenible en el entorno universitario y cotidiano.</p>
+    </div>
+  </div>
+
+  <!-- === SCRIPT FUNCIONAL === -->
   <script>
     const datos = [
       {nombre:"Aguirre Luis Boris Rajabil", total:6.1, vivienda:1, viajar:1.9, consumo:3.2},
@@ -104,18 +193,19 @@
       {nombre:"Castañeda Estrella Giomira Edith", total:6.6, vivienda:0.9, viajar:2.9, consumo:2.8}
     ];
 
+    // --- Rellenar tabla ---
     const cuerpoTabla = document.getElementById("datosTabla");
     datos.forEach(d => {
-      const fila = `<tr>
+      cuerpoTabla.innerHTML += `<tr>
         <td>${d.nombre}</td>
         <td>${d.total}</td>
         <td>${d.vivienda}</td>
         <td>${d.viajar}</td>
         <td>${d.consumo}</td>
       </tr>`;
-      cuerpoTabla.innerHTML += fila;
     });
 
+    // --- Cálculos ---
     const promedio = (arr, campo) => arr.reduce((a,b)=>a+b[campo],0)/arr.length;
     const promedioTotal = promedio(datos, "total").toFixed(2);
     document.getElementById("promedioTotal").textContent = promedioTotal + " ton CO₂";
@@ -126,26 +216,31 @@
     document.getElementById("menorHuella").textContent = `${menor.nombre} (${menor.total} ton)`;
 
     // --- Gráfico comparativo ---
-    const ctx1 = document.getElementById("graficoTotal");
-    new Chart(ctx1, {
+    new Chart(document.getElementById("graficoTotal"), {
       type: 'bar',
       data: {
         labels: datos.map(d=>d.nombre),
         datasets: [{
           label: "Huella Total (ton CO₂)",
           data: datos.map(d=>d.total),
+          backgroundColor: datos.map(() => 
+            `hsl(${Math.random() * 100 + 120}, 50%, 55%)` // tonalidades verdes y azuladas
+          ),
+          borderColor: '#7fffd4',
           borderWidth: 1
         }]
       },
       options: {
         plugins:{legend:{display:false}},
-        scales:{x:{ticks:{color:"#9fffa3"}},y:{ticks:{color:"#9fffa3"}}}
+        scales:{
+          x:{ticks:{color:"#aef7d9"}},
+          y:{ticks:{color:"#aef7d9"}}
+        }
       }
     });
 
-    // --- Gráfico categorías ---
-    const ctx2 = document.getElementById("graficoCategorias");
-    new Chart(ctx2, {
+    // --- Gráfico por categorías ---
+    new Chart(document.getElementById("graficoCategorias"), {
       type: 'pie',
       data: {
         labels: ["Vivienda", "Viajar", "Consumo"],
@@ -154,13 +249,12 @@
             promedio(datos,"vivienda").toFixed(2),
             promedio(datos,"viajar").toFixed(2),
             promedio(datos,"consumo").toFixed(2)
-          ]
+          ],
+          backgroundColor: ["#6edaa8", "#4fc0b0", "#73c8e0"]
         }]
       },
       options: {
-        plugins:{
-          legend:{labels:{color:"#9fffa3"}}
-        }
+        plugins:{legend:{labels:{color:"#aef7d9", font:{size:14}}}}
       }
     });
   </script>
